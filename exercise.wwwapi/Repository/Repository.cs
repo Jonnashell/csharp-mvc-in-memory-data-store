@@ -12,9 +12,13 @@ namespace exercise.wwwapi.Repository
         {
             _db = db;
         }
-        public async Task<List<Product>> GetAsync()
+        public async Task<List<Product>> GetAsync(string category = "")
         {
-            return await _db.Products.ToListAsync();
+            if (string.IsNullOrEmpty(category))
+            {
+                return await _db.Products.ToListAsync();
+            }
+            return  await _db.Products.Where(item => item.Category == category).ToListAsync();
         }
 
         public async Task<Product> AddAsync(Product entity)
@@ -32,6 +36,7 @@ namespace exercise.wwwapi.Repository
         public async Task<Product> DeleteAsync(int id)
         {
             var target = await _db.Products.FindAsync(id);
+            if (target == null) return null;
             _db.Products.Remove(target);
             await _db.SaveChangesAsync();
             return target;
