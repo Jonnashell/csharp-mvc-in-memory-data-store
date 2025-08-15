@@ -37,7 +37,7 @@ namespace exercise.wwwapi.Endpoints
             product.Category = model.Category;
             product.Price = model.Price;
             var results = await repository.AddAsync(product);
-            return TypedResults.Ok(results);
+            return TypedResults.Created($"https://localhost:7188/products/{results.Id}", results);
         }
         
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -78,7 +78,7 @@ namespace exercise.wwwapi.Endpoints
             if (model.Price != 0 && model.Price != entity.Price) entity.Price = model.Price;
 
             await repository.UpdateAsync(id, entity);
-            return TypedResults.Created();
+            return TypedResults.Created($"http://localhost:7188/products/{entity.Id}", entity);
         }
 
         [ProducesResponseType(StatusCodes.Status200OK)]
