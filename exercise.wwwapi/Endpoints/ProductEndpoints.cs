@@ -57,6 +57,10 @@ namespace exercise.wwwapi.Endpoints
             if (model.Category != null) entity.Category = model.Category;
             if (model.Price != 0 && model.Price != entity.Price) entity.Price = model.Price;
 
+            await repository.UpdateAsync(id, entity);
+
+            
+
             return TypedResults.Created();
         }
 

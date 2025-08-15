@@ -39,7 +39,10 @@ namespace exercise.wwwapi.Repository
 
         public async Task<Product> UpdateAsync(int id, Product entity)
         {
-            throw new NotImplementedException();
+            var target = await _db.Products.FindAsync(id);
+            target = entity;
+            await _db.SaveChangesAsync();
+            return target;
         }
     }
 }
